@@ -2,6 +2,8 @@
 import React from 'react';
 import Main from './components/Main'
 import AddTransaction from './components/AddTransaction'
+import Categories from './components/Categories'
+
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
@@ -13,6 +15,7 @@ const App = () => (
         <Stack.Navigator initialRouteName="Main" headerMode="none">
             <Stack.Screen name="Main" component={Main} />
             <Stack.Screen name="AddTransaction" component={AddTransaction} />
+            <Stack.Screen name="Categories" component={Categories} />
         </Stack.Navigator>
     </NavigationContainer>
     //   <Provider store={store}>

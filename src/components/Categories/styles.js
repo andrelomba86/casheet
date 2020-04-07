@@ -57,7 +57,7 @@ export const TransactionTypeButton = styled.TouchableOpacity.attrs({
 //  border-color: ${prop => prop.selected ? "#DA3" : "#AAA"};
 //  border: 0 0 2px 0;
  
-export const TransactionButtonText = styled.Text`
+export const TransactionTypeButtonText = styled.Text`
   font-size: 17px;
   
 `; //color: white;

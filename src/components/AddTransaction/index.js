@@ -3,26 +3,20 @@
 import React, { Fragment, useState } from 'react'
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { Text } from 'react-native'
-import {
-  MESSAGE_TRANSFER,
-  MESSAGE_INCOME,
-  MESSAGE_EXPENSE,
-  MESSAGE_DESCRIPTION,
-  MESSAGE_AMOUNT,
-  MESSAGE_DATE
-} from '../../../lang/pt-br/pt-br.js'
+import MESSAGE from '../../../lang/pt-br/pt-br.js';
 
 import {
   Container,
-  ButtonContainer,
+  Button,
   StyledIcon,
   TransactionTypeContainer,
   TransactionTypeButton,
-  TransactionTypeButtonText,
+  TransactionButtonText,
   TransactionFormRow,
   TransactionInput,
   TransactionLabel,
-  TransactionDate
+  TransactionDate,
+  ButtonsContainer
 } from './styles'
 
 const AddTransaction = ({ navigation }) => {
@@ -45,45 +39,58 @@ const AddTransaction = ({ navigation }) => {
     }
   ]
 
-  const transactionTypes = [MESSAGE_EXPENSE, MESSAGE_INCOME, MESSAGE_TRANSFER]
+  const transactionTypes = [MESSAGE.expense, MESSAGE.income, MESSAGE.transfer]
   const [selectedTransactionType, setTransactionType] = useState(0)
 
   const [description, setDescription] = useState('')
-  const [amount, setAmount] = useState(0)
+  const [amount, setAmount] = useState('')
   var today = new Date()
   today.setHours(0,0,0,0)
   const [date, setDate] = useState(today)
   const [showDatePicker, setShowDatePicker] = useState(false)
+  
+  const [category, setCategory] = useState('')
 
+  console.log("rennderig")
   return (
     <>
       <Container>
+        
         <TransactionTypeContainer>
           {transactionTypes.map((item, index) => (
             <TransactionTypeButton key={index} selected={(selectedTransactionType === index ? true : false)} onPress={() => setTransactionType(index)}>
-              <TransactionTypeButtonText >
+              <TransactionButtonText >
                 {item}
-              </TransactionTypeButtonText>
+              </TransactionButtonText>
             </TransactionTypeButton>
           ))}
         </TransactionTypeContainer>
 
         <TransactionFormRow>
-          <TransactionLabel>{MESSAGE_DESCRIPTION}</TransactionLabel>
+          <TransactionLabel>{MESSAGE.description}</TransactionLabel>
           <TransactionInput onChangeText={text => setDescription(text)} value={description} autoFocus={true} />
         </TransactionFormRow>
 
         <TransactionFormRow>
-          <TransactionLabel>{MESSAGE_AMOUNT}</TransactionLabel>
+          <TransactionLabel>{MESSAGE.amount}</TransactionLabel>
           <TransactionInput onChangeText={text => setAmount(parseInt(text))} value={amount} width="150px" keyboardType="decimal-pad" placeholder="0,00" center />
         </TransactionFormRow>
        
         <TransactionFormRow>
-          <TransactionLabel>{MESSAGE_DATE}</TransactionLabel>
+          <TransactionLabel>{MESSAGE.date}</TransactionLabel>
           <TransactionDate onPress={() => setShowDatePicker(true)}>
-            <TransactionTypeButtonText >
+            <TransactionButtonText >
               {date.toLocaleDateString()}
-            </TransactionTypeButtonText>
+            </TransactionButtonText>
+          </TransactionDate>
+        </TransactionFormRow>
+
+        <TransactionFormRow>
+          <TransactionLabel>{MESSAGE.category}</TransactionLabel>
+          <TransactionDate onPress={() => navigation.navigate('Categories')}>
+            <TransactionButtonText >
+              {category}
+            </TransactionButtonText>
           </TransactionDate>
         </TransactionFormRow>
 
@@ -96,7 +103,7 @@ const AddTransaction = ({ navigation }) => {
             display="default"
             onChange={(_e, selectedDate) => {
               setShowDatePicker(false)
-              setDate(selectedDate ? selectedDate : date)
+              if (selectedDate) setDate(selectedDate)
             }}
           />
         }
@@ -111,13 +118,15 @@ const AddTransaction = ({ navigation }) => {
           - pago/não pago
 
          */}
-
-        {buttons.map((item, index) => (
-          <ButtonContainer key={index} index={index} bgcolor={item.color} onPress={item.onpress}>
-            <StyledIcon name={item.icon} />
-          </ButtonContainer>
-        ))}
+        
       </Container>
+      <ButtonsContainer>
+          {buttons.map((item, index) => (
+            <Button key={index} index={index} bgcolor={item.color} onPress={item.onpress}>
+              <StyledIcon name={item.icon} />
+            </Button>
+          ))}
+        </ButtonsContainer>
     </>
   )
 }
