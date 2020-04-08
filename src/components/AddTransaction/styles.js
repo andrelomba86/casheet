@@ -12,14 +12,14 @@ export const Container = styled.ScrollView`
    
 `;
 export const ButtonsContainer = styled.View`
-backgroundColor: #aaa;
   position: relative;
-  marginLeft: ${buttonMargin}px;
-  marginBottom: ${buttonMargin}px;
+  padding: ${buttonMargin}px;
+  
   flex-direction: row-reverse;
 
 `;
 export const Button = styled.TouchableOpacity`
+    font-size: 32px !important
     width: ${buttonSize}px;
     height: ${buttonSize}px;
     borderRadius: 30px;
@@ -28,11 +28,17 @@ export const Button = styled.TouchableOpacity`
     z-index: 10;
     alignItems: center;
     justifyContent: center;
+    
 `;
 
 export const StyledIcon = styled(Icon)`
-  font-size: 32px;
+  fontSize: 32px;
   color: #FDFDFD;
+`;
+
+export const StyledPricetagIcon = styled(Icon)`
+  fontSize: 17px;
+  margin: 20px;
 `;
 
 export const TransactionTypeContainer = styled.View`
@@ -59,7 +65,7 @@ export const TransactionTypeButton = styled.TouchableOpacity.attrs({
  
 export const TransactionButtonText = styled.Text`
   font-size: 17px;
-  
+  color: red;  
 `; //color: white;
 
 export const TransactionFormRow = styled.View`
@@ -91,7 +97,7 @@ export const TransactionInput = styled.TextInput`
 
 
 
-export const TransactionDate = styled.TouchableOpacity.attrs({
+export const TransactionButton = styled.TouchableOpacity.attrs({
   activeOpacity: 1
 })`
   padding: 5px 30px;

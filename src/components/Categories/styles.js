@@ -7,9 +7,6 @@ const buttonSpacing = 7;
 
 export const Container = styled.ScrollView`
     padding: 15px 30px;
-    ${//backgroundColor: #0aa;
-    null}
-   
 `;
 export const ButtonsContainer = styled.View`
 backgroundColor: #aaa;
@@ -29,6 +26,8 @@ export const Button = styled.TouchableOpacity`
     alignItems: center;
     justifyContent: center;
 `;
+
+
 
 export const StyledIcon = styled(Icon)`
   font-size: 32px;

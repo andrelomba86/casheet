@@ -2,21 +2,22 @@
 // import './db'
 import React, { Fragment, useState } from 'react'
 import DateTimePicker from '@react-native-community/datetimepicker';
-import { Text } from 'react-native'
-import MESSAGE from '../../../lang/pt-br/pt-br.js';
+import MESSAGE from '../../../locale/pt-br/pt-br.js';
 
 import {
   Container,
   Button,
   StyledIcon,
+  StyledPricetagIcon,
   TransactionTypeContainer,
   TransactionTypeButton,
   TransactionButtonText,
   TransactionFormRow,
   TransactionInput,
   TransactionLabel,
-  TransactionDate,
-  ButtonsContainer
+  TransactionButton,
+  ButtonsContainer,
+  
 } from './styles'
 
 const AddTransaction = ({ navigation }) => {
@@ -49,7 +50,8 @@ const AddTransaction = ({ navigation }) => {
   const [date, setDate] = useState(today)
   const [showDatePicker, setShowDatePicker] = useState(false)
   
-  const [category, setCategory] = useState('')
+  const [category, setCategory] = useState(MESSAGE.uncategorized)
+  const [recurrence, setRecurrence] = useState(0)
 
   console.log("rennderig")
   return (
@@ -73,25 +75,39 @@ const AddTransaction = ({ navigation }) => {
 
         <TransactionFormRow>
           <TransactionLabel>{MESSAGE.amount}</TransactionLabel>
-          <TransactionInput onChangeText={text => setAmount(parseInt(text))} value={amount} width="150px" keyboardType="decimal-pad" placeholder="0,00" center />
+          <TransactionInput onChangeText={text => setAmount(text)} value={amount} width="150px" keyboardType="decimal-pad" placeholder="0,00" center />
         </TransactionFormRow>
        
         <TransactionFormRow>
           <TransactionLabel>{MESSAGE.date}</TransactionLabel>
-          <TransactionDate onPress={() => setShowDatePicker(true)}>
+          <TransactionButton onPress={() => setShowDatePicker(true)}>
             <TransactionButtonText >
               {date.toLocaleDateString()}
             </TransactionButtonText>
-          </TransactionDate>
+          </TransactionButton>
         </TransactionFormRow>
 
         <TransactionFormRow>
           <TransactionLabel>{MESSAGE.category}</TransactionLabel>
-          <TransactionDate onPress={() => navigation.navigate('Categories')}>
-            <TransactionButtonText >
-              {category}
+          <TransactionButton onPress={() => navigation.navigate('Categories')}>
+            
+            <TransactionButtonText color="red">
+            {category}
+            &nbsp;
+              <StyledPricetagIcon name="md-pricetag" />
+              
+              
             </TransactionButtonText>
-          </TransactionDate>
+          </TransactionButton>
+        </TransactionFormRow>
+
+        <TransactionFormRow>
+          <TransactionLabel>{MESSAGE.recurrence}</TransactionLabel>
+          <TransactionButton onPress={() => {}}>
+            <TransactionButtonText >
+              {recurrence}
+            </TransactionButtonText>
+          </TransactionButton>
         </TransactionFormRow>
 
         {showDatePicker &&

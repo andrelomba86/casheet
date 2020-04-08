@@ -3,16 +3,8 @@
 import React, { Fragment, useState } from 'react'
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { Text } from 'react-native'
-import {
-  MESSAGE_TRANSFER,
-  MESSAGE_INCOME,
-  MESSAGE_EXPENSE,
-  MESSAGE_DESCRIPTION,
-  MESSAGE_AMOUNT,
-  MESSAGE_DATE
-} from '../../../lang/pt-br/pt-br.js'
 
-import MESSAGE from '../../../lang/pt-br/pt-br.js';
+import MESSAGE from '../../../locale/pt-br/pt-br.js';
 
 import {
   Container,
@@ -20,6 +12,25 @@ import {
   StyledIcon,
   ButtonsContainer
 } from './styles'
+
+const defaultCategories = [
+  {
+    ID: 0,
+    description: MESSAGE.home,
+    color: "yellow"
+  },
+  {
+    ID: 1,
+    description: MESSAGE.food,
+    color: "red"
+  },
+  {
+    ID: 2,
+    description: MESSAGE.others,
+    color: "gray"
+  },
+]
+
 
 const Categories = ({ navigation }) => {
 
@@ -60,4 +71,4 @@ const Categories = ({ navigation }) => {
   )
 }
 
-export default AddTransaction
+export default Categories
