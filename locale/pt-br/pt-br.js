@@ -7,8 +7,9 @@ export default {
     date: "Data" ,
     category: "Categoria",
     recurrence: "Recorrência",
-    uncategorized: "sem categoria",
+    uncategorized: "Sem categoria",
     home: "Casa",
     food: "Comida",
-    others: "Outros", 
+    others: "Outros",
+    paid: "Pago",
 }

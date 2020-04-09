@@ -8,10 +8,17 @@ import MESSAGE from '../../../locale/pt-br/pt-br.js';
 
 import {
   Container,
+  CategoriesTitle,
+  CategoriesText,
+  CategoriesRow,
+  CategoriesIcon
+} from './styles'
+
+import {
   Button,
   StyledIcon,
-  ButtonsContainer
-} from './styles'
+  ButtonsContainer,
+} from '../BasicButtonsStyles'
 
 const defaultCategories = [
   {
@@ -32,7 +39,7 @@ const defaultCategories = [
 ]
 
 
-const Categories = ({ navigation }) => {
+const Categories = ({ navigation, route }) => {
 
   // const [showMenu, setShowMenu] = useState(false)
   const buttons = [
@@ -52,21 +59,33 @@ const Categories = ({ navigation }) => {
     }
   ]
 
-
-  console.log("rennderig")
   return (
     <>
+      <CategoriesTitle>
+        Categorias
+      </CategoriesTitle>
       <Container>
-      
-        
+
+        {defaultCategories.map((item) =>
+          <CategoriesRow onPress={() => {
+            route.params.fnSetCategory(item)
+            navigation.navigate('AddTransaction')
+          }}>
+            <CategoriesIcon color={item.color} />
+            <CategoriesText key={item.ID} >
+              {item.description}
+            </CategoriesText>
+          </CategoriesRow>
+        )}
+
       </Container>
       <ButtonsContainer>
-          {buttons.map((item, index) => (
-            <Button key={index} index={index} bgcolor={item.color} onPress={item.onpress}>
-              <StyledIcon name={item.icon} />
-            </Button>
-          ))}
-        </ButtonsContainer>
+        {buttons.map((item, index) => (
+          <Button key={index} index={index} bgcolor={item.color} onPress={item.onpress}>
+            <StyledIcon name={item.icon} />
+          </Button>
+        ))}
+      </ButtonsContainer>
     </>
   )
 }

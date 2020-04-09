@@ -1,44 +1,18 @@
 import styled from 'styled-components/native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-const buttonMargin = 20;
-const buttonSize = 60;
-const buttonSpacing = 7;
-
 export const Container = styled.ScrollView`
     padding: 15px 30px;
     ${//backgroundColor: #0aa;
     null}
-   
-`;
-export const ButtonsContainer = styled.View`
-  position: relative;
-  padding: ${buttonMargin}px;
-  
-  flex-direction: row-reverse;
-
-`;
-export const Button = styled.TouchableOpacity`
-    font-size: 32px !important
-    width: ${buttonSize}px;
-    height: ${buttonSize}px;
-    borderRadius: 30px;
-    margin: 0 0 0 ${buttonSpacing}px;
-    background: ${prop => prop.bgcolor || "#AAA"};
-    z-index: 10;
-    alignItems: center;
-    justifyContent: center;
-    
 `;
 
-export const StyledIcon = styled(Icon)`
-  fontSize: 32px;
-  color: #FDFDFD;
-`;
-
-export const StyledPricetagIcon = styled(Icon)`
+export const StyledPricetagIcon = styled(Icon).attrs({
+  name: "md-pricetag"
+})`
   fontSize: 17px;
   margin: 20px;
+  color: ${props => props.color ? props.color : 'black' };
 `;
 
 export const TransactionTypeContainer = styled.View`
@@ -65,7 +39,7 @@ export const TransactionTypeButton = styled.TouchableOpacity.attrs({
  
 export const TransactionButtonText = styled.Text`
   font-size: 17px;
-  color: red;  
+  
 `; //color: white;
 
 export const TransactionFormRow = styled.View`
@@ -79,6 +53,7 @@ export const TransactionFormRow = styled.View`
 
 export const TransactionLabel = styled.Text`
   font-size: 16px;
+  color: #777
 `;
 
 export const TransactionInput = styled.TextInput`
@@ -95,8 +70,6 @@ export const TransactionInput = styled.TextInput`
   ${props => props.center && `textAlign: center`}
 `;
 
-
-
 export const TransactionButton = styled.TouchableOpacity.attrs({
   activeOpacity: 1
 })`
@@ -106,4 +79,12 @@ export const TransactionButton = styled.TouchableOpacity.attrs({
   borderBottomColor: #CCC;
   borderBottomWidth: 1.5px;
   borderRadius: 6px
+`;
+
+export const TransactionSwitch = styled.Switch.attrs({
+  thumbColor: "#D33",
+  trackColor: { true: "#D88"}
+})`
+  padding: 10px 0;
+  color: #D22
 `;
