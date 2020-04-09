@@ -1,87 +1,56 @@
 // import { Accounts, }
 // import './db'
-import React, { Fragment, useState } from 'react'
-import DateTimePicker from '@react-native-community/datetimepicker';
-import { Text } from 'react-native'
-
-import MESSAGE from '../../../locale/pt-br/pt-br.js';
+import React from 'react'
 
 import {
   Container,
   CategoriesTitle,
   CategoriesText,
   CategoriesRow,
-  CategoriesIcon
+  CategoriesIcon,
 } from './styles'
 
-import {
-  Button,
-  StyledIcon,
-  ButtonsContainer,
-} from '../BasicButtonsStyles'
+import { Button, StyledIcon, ButtonsContainer } from '../BasicButtonsStyles'
 
-const defaultCategories = [
-  {
-    ID: 0,
-    description: MESSAGE.home,
-    color: "yellow"
-  },
-  {
-    ID: 1,
-    description: MESSAGE.food,
-    color: "red"
-  },
-  {
-    ID: 2,
-    description: MESSAGE.others,
-    color: "gray"
-  },
-]
+import { defaultCategories } from '../../consts'
 
-
-const Categories = ({ navigation, route }) => {
-
+const Categories = ({ navigation }) => {
   // const [showMenu, setShowMenu] = useState(false)
   const buttons = [
     {
-      color: "#D23",
-      icon: "md-arrow-back",
+      color: '#D23',
+      icon: 'md-arrow-back',
       onpress: () => {
-        navigation.navigate('AddTransaction')
-      }
+        navigation.goBack()
+      },
     },
-    {
-      color: "#74D",
-      icon: "md-checkmark",
-      onpress: () => {
-
-      }
-    }
   ]
 
   return (
     <>
-      <CategoriesTitle>
-        Categorias
-      </CategoriesTitle>
+      <CategoriesTitle>Categorias</CategoriesTitle>
       <Container>
-
-        {defaultCategories.map((item) =>
-          <CategoriesRow onPress={() => {
-            route.params.fnSetCategory(item)
-            navigation.navigate('AddTransaction')
-          }}>
+        {defaultCategories.map(item => (
+          <CategoriesRow
+            key={item.ID}
+            onPress={() => {
+              // route.params.fnSetCategory(item)
+              navigation.navigate('AddTransaction', {
+                category: item,
+              })
+            }}>
             <CategoriesIcon color={item.color} />
-            <CategoriesText key={item.ID} >
-              {item.description}
-            </CategoriesText>
+            <CategoriesText>{item.description}</CategoriesText>
           </CategoriesRow>
-        )}
-
+        ))}
       </Container>
       <ButtonsContainer>
         {buttons.map((item, index) => (
-          <Button key={index} index={index} bgcolor={item.color} onPress={item.onpress}>
+          <Button
+            key={index}
+            index={index}
+            bgcolor={item.color}
+            onPress={item.onpress}>
             <StyledIcon name={item.icon} />
           </Button>
         ))}

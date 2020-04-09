@@ -1,41 +1,32 @@
-import styled from 'styled-components/native';
-import Icon from 'react-native-vector-icons/Ionicons';
-
-const buttonMargin = 20;
-const buttonSize = 60;
-const buttonSpacing = 7;
+import styled from 'styled-components/native'
+import Icon from 'react-native-vector-icons/Ionicons'
 
 export const Container = styled.ScrollView`
-    padding: 15px 30px;
-`;
+  padding: 15px 30px;
+`
 
-export const CategoriesTitle = styled.Text.attrs({
-})`
+export const CategoriesTitle = styled.Text.attrs({})`
   padding: 15px;
-  fontWeight: bold;
+  font-weight: bold;
   font-size: 30px;
-`;
+`
 
 export const CategoriesRow = styled.TouchableOpacity`
-  flexDirection: row;
-  alignItems: center;
+  flex-direction: row;
+  align-items: center;
   padding: 8px 0;
-  borderColor: #AAA
-  borderBottomWidth: .5px  
-`;
+  border-color: #AAA
+  border-bottom-width: .5px  
+`
 
 export const CategoriesIcon = styled(Icon).attrs({
-  name: "md-pricetag"
+  name: 'md-pricetag',
 })`
   color: ${props => props.color || 'black'}
-  fontSize: 17px;
+  font-size: 17px;
   margin: 0 20px;
-`;
+`
 
 export const CategoriesText = styled.Text`
-  
-  fontSize: 17px;
-  
-
-`; //color: white;
-
+  font-size: 17px;
+` //color: white;
