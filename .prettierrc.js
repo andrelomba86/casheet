@@ -1,8 +1,8 @@
 module.exports = {
-  jsxBracketSameLine: true,
+  jsxBracketSameLine: false,
   singleQuote: true,
   semi: false,
   tabWidth: 2,
   useTabs: false,
-  arrowParens: "avoid",
-};
+  arrowParens: 'avoid',
+}

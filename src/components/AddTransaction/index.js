@@ -1,21 +1,18 @@
 // import { Accounts, }
 // import './db'
 import React, { useState } from 'react'
-// import DateTimePicker from '@react-native-community/datetimepicker'
 import DatePicker from './DatePicker'
+import TouchableInput from './TouchableInput'
+import Input from './Input'
+import Switch from './Switch'
 import MESSAGE from '../../../locale/pt-br/pt-br.js'
 
 import {
   Container,
   StyledPricetagIcon,
+  TouchableText,
   TransactionTypeContainer,
   TransactionTypeButton,
-  Row,
-  TransactionInput,
-  Label,
-  TouchableInput,
-  TouchableInputText,
-  TransactionSwitch,
 } from './styles'
 
 import { recurrencePeriods } from '../../consts'
@@ -23,7 +20,6 @@ import { recurrencePeriods } from '../../consts'
 import { ButtonsContainer, Button, StyledIcon } from '../BasicButtonsStyles'
 
 const AddTransaction = ({ navigation, route }) => {
-  // const [showMenu, setShowMenu] = useState(false)
   const buttons = [
     {
       color: '#D23',
@@ -38,16 +34,13 @@ const AddTransaction = ({ navigation, route }) => {
       onpress: () => {},
     },
   ]
+  const today = new Date()
+  today.setHours(0, 0, 0, 0)
 
-  const transactionTypes = [MESSAGE.expense, MESSAGE.income, MESSAGE.transfer]
   const [selectedTransactionType, setTransactionType] = useState(0)
-
   const [description, setDescription] = useState('')
   const [amount, setAmount] = useState('')
-  var today = new Date()
-  today.setHours(0, 0, 0, 0)
   const [date, setDate] = useState(today)
-  // const [showDatePicker, setShowDatePicker] = useState(false)
   const [category, setCategory] = useState({
     ID: -1,
     description: MESSAGE.uncategorized,
@@ -57,7 +50,6 @@ const AddTransaction = ({ navigation, route }) => {
     periodIndex: 0,
     strInterval: '',
   })
-
   const [paid, setPaid] = useState(true)
 
   const callback_recurrence = route.prams?.recurrence
@@ -72,6 +64,8 @@ const AddTransaction = ({ navigation, route }) => {
     }
   }, [route.params, callback_recurrence])
 
+  const transactionTypes = [MESSAGE.expense, MESSAGE.income, MESSAGE.transfer]
+
   console.log('rendering')
   return (
     <>
@@ -81,66 +75,57 @@ const AddTransaction = ({ navigation, route }) => {
             <TransactionTypeButton
               key={index}
               selected={selectedTransactionType === index ? true : false}
-              onPress={() => setTransactionType(index)}>
-              <TouchableInputText>{item}</TouchableInputText>
+              onPress={() => setTransactionType(index)}
+            >
+              <TouchableText>{item}</TouchableText>
             </TransactionTypeButton>
           ))}
         </TransactionTypeContainer>
 
-        <Row>
-          <Label>{MESSAGE.description}</Label>
-          <TransactionInput
-            onChangeText={text => setDescription(text)}
-            value={description}
-          />
-          {/* {autoFocus={true}} */}
-        </Row>
+        <Input
+          label={MESSAGE.description}
+          onChangeText={text => setDescription(text)}
+          value={description}
+        />
+        {/* {autoFocus={true}} */}
 
-        <Row>
-          <Label>{MESSAGE.amount}</Label>
-          <TransactionInput
-            onChangeText={text => setAmount(text)}
-            value={amount}
-            width="150px"
-            keyboardType="decimal-pad"
-            placeholder="0,00"
-            center
-          />
-        </Row>
+        <Input
+          label={MESSAGE.amount}
+          onChangeText={text => setAmount(text)}
+          value={amount}
+          width="150px"
+          keyboardType="decimal-pad"
+          placeholder="0,00"
+          center
+        />
 
-        <Row>
-          <Label>{MESSAGE.date}</Label>
-          <DatePicker onChangeDate={value => setDate(value)} value={date} />
-        </Row>
+        <DatePicker
+          label={MESSAGE.date}
+          onChangeDate={value => setDate(value)}
+          value={date}
+        />
 
-        <Row>
-          <Label>{MESSAGE.category}</Label>
-          <TouchableInput onPress={() => navigation.navigate('Categories')}>
-            <TouchableInputText>
-              <StyledPricetagIcon color={category.color} />
-              &nbsp; {category.description}
-            </TouchableInputText>
-          </TouchableInput>
-        </Row>
+        <TouchableInput
+          label={MESSAGE.category}
+          onPress={() => navigation.navigate('Categories')}
+        >
+          <StyledPricetagIcon color={category.color} />
+          &nbsp; {category.description}
+        </TouchableInput>
 
-        <Row>
-          <Label>{MESSAGE.recurrence}</Label>
-          <TouchableInput
-            onPress={() => navigation.navigate('Recurrence', recurrence)}>
-            <TouchableInputText>
-              {recurrence.periodIndex > 0 && `${recurrence.strInterval} `}
-              {recurrencePeriods[recurrence.periodIndex]}
-            </TouchableInputText>
-          </TouchableInput>
-        </Row>
+        <TouchableInput
+          label={MESSAGE.recurrence}
+          onPress={() => navigation.navigate('Recurrence', recurrence)}
+        >
+          {recurrence.periodIndex > 0 && `${recurrence.strInterval} `}
+          {recurrencePeriods[recurrence.periodIndex]}
+        </TouchableInput>
 
-        <Row>
-          <Label>{MESSAGE.paid}</Label>
-          <TransactionSwitch
-            value={paid}
-            onValueChange={state => setPaid(state)}
-          />
-        </Row>
+        <Switch
+          label={MESSAGE.paid}
+          value={paid}
+          onValueChange={state => setPaid(state)}
+        />
 
         {/*
           - descrição
@@ -160,7 +145,8 @@ const AddTransaction = ({ navigation, route }) => {
             key={index}
             index={index}
             bgcolor={item.color}
-            onPress={item.onpress}>
+            onPress={item.onpress}
+          >
             <StyledIcon name={item.icon} />
           </Button>
         ))}

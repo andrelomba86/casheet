@@ -51,7 +51,7 @@ export const Label = styled.Text`
   color: #777;
 `
 
-export const TransactionInput = styled.TextInput`
+export const StyledInput = styled.TextInput`
   align-self: center;
   font-size: 16px;
   border-bottom-color: #CCC;
@@ -65,7 +65,7 @@ export const TransactionInput = styled.TextInput`
   ${props => props.center && `text-align: center`}
 `
 
-export const TouchableInput = styled.TouchableOpacity.attrs({
+export const Touchable = styled.TouchableOpacity.attrs({
   activeOpacity: 1,
 })`
   padding: 5px 30px;
@@ -75,11 +75,11 @@ export const TouchableInput = styled.TouchableOpacity.attrs({
   border-bottom-width: 1.5px;
   border-radius: 6px;
 `
-export const TouchableInputText = styled.Text`
+export const TouchableText = styled.Text`
   font-size: 17px;
 ` //color: white;
 
-export const TransactionSwitch = styled.Switch.attrs({
+export const StyledSwitch = styled.Switch.attrs({
   thumbColor: '#D33',
   trackColor: { true: '#D88' },
 })`

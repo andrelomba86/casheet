@@ -2,13 +2,7 @@
 // import './db'
 import React from 'react'
 
-import {
-  Container,
-  CategoriesTitle,
-  CategoriesText,
-  CategoriesRow,
-  CategoriesIcon,
-} from './styles'
+import { Container, Title, Text, Row, PricetagIcon } from './styles'
 
 import { Button, StyledIcon, ButtonsContainer } from '../BasicButtonsStyles'
 
@@ -28,20 +22,21 @@ const Categories = ({ navigation }) => {
 
   return (
     <>
-      <CategoriesTitle>Categorias</CategoriesTitle>
+      <Title>Categorias</Title>
       <Container>
         {defaultCategories.map(item => (
-          <CategoriesRow
+          <Row
             key={item.ID}
             onPress={() => {
               // route.params.fnSetCategory(item)
               navigation.navigate('AddTransaction', {
                 category: item,
               })
-            }}>
-            <CategoriesIcon color={item.color} />
-            <CategoriesText>{item.description}</CategoriesText>
-          </CategoriesRow>
+            }}
+          >
+            <PricetagIcon color={item.color} />
+            <Text>{item.description}</Text>
+          </Row>
         ))}
       </Container>
       <ButtonsContainer>
@@ -50,7 +45,8 @@ const Categories = ({ navigation }) => {
             key={index}
             index={index}
             bgcolor={item.color}
-            onPress={item.onpress}>
+            onPress={item.onpress}
+          >
             <StyledIcon name={item.icon} />
           </Button>
         ))}
