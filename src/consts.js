@@ -1,11 +1,12 @@
 import MESSAGE from '../locale/pt-br/pt-br.js'
 
 export const recurrencePeriods = [
-  { ID: 1, description: MESSAGE.week },
-  { ID: 2, description: MESSAGE.fifteen_days },
-  { ID: 3, description: MESSAGE.month },
-  { ID: 4, description: MESSAGE.bimester },
-  { ID: 5, description: MESSAGE.year },
+  MESSAGE.dontrepeat,
+  MESSAGE.week,
+  MESSAGE.fifteen_days,
+  MESSAGE.month,
+  MESSAGE.bimester,
+  MESSAGE.year,
 ]
 
 export const defaultCategories = [

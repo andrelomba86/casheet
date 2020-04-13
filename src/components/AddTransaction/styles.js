@@ -37,11 +37,7 @@ export const TransactionTypeButton = styled.TouchableOpacity.attrs({
 //  border-color: ${prop => prop.selected ? "#DA3" : "#AAA"};
 //  border: 0 0 2px 0;
 
-export const TransactionButtonText = styled.Text`
-  font-size: 17px;
-` //color: white;
-
-export const TransactionFormRow = styled.View`
+export const Row = styled.View`
   flex-direction: row;
   border-radius: 6px;
   margin: 0 0 8px 0;
@@ -50,7 +46,7 @@ export const TransactionFormRow = styled.View`
   justify-content: space-between;
 `
 
-export const TransactionLabel = styled.Text`
+export const Label = styled.Text`
   font-size: 16px;
   color: #777;
 `
@@ -69,7 +65,7 @@ export const TransactionInput = styled.TextInput`
   ${props => props.center && `text-align: center`}
 `
 
-export const TransactionButton = styled.TouchableOpacity.attrs({
+export const TouchableInput = styled.TouchableOpacity.attrs({
   activeOpacity: 1,
 })`
   padding: 5px 30px;
@@ -79,6 +75,9 @@ export const TransactionButton = styled.TouchableOpacity.attrs({
   border-bottom-width: 1.5px;
   border-radius: 6px;
 `
+export const TouchableInputText = styled.Text`
+  font-size: 17px;
+` //color: white;
 
 export const TransactionSwitch = styled.Switch.attrs({
   thumbColor: '#D33',

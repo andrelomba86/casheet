@@ -20,12 +20,12 @@ import { Button, StyledIcon, ButtonsContainer } from '../BasicButtonsStyles'
   TO-DO:
   - definir limite de caracteres para o INPUT
   - ?? exibir erro se não for número / for maior que 999
-
+  - alterar componente "Row" para melhor indicar (Option /Select?)
 */
 
-const Recurrence = ({ navigation }) => {
-  const [interval, setInterval] = useState('1')
-  const [period, setPeriod] = useState(recurrencePeriods[0].ID)
+const Recurrence = ({ navigation, route }) => {
+  const [interval, setInterval] = useState(route.params?.strInterval || '1')
+  const [period, setPeriod] = useState(route.params.periodIndex || 0)
 
   const buttons = [
     {
@@ -40,7 +40,7 @@ const Recurrence = ({ navigation }) => {
       icon: 'md-checkmark',
       onpress: () => {
         navigation.navigate('AddTransaction', {
-          recurrence: { strInterval: interval, periodID: period },
+          recurrence: { strInterval: interval, periodIndex: period },
         })
       },
     },
@@ -55,19 +55,22 @@ const Recurrence = ({ navigation }) => {
           <SyledInput
             value={interval}
             keyboardType="decimal-pad"
-            onChange={value => setInterval(value)}
+            editable={period > 0 ? true : false}
+            onChange={e => {
+              setInterval(e.nativeEvent.text)
+            }}
           />
         </ColInterval>
         <ColPeriod>
-          {recurrencePeriods?.map(item => (
+          {recurrencePeriods?.map((item, index) => (
             <Row
-              key={item.ID}
-              selected={period === item.ID ? true : false}
+              key={index}
+              selected={period === index ? true : false}
               onPress={() => {
-                setPeriod(item.ID)
+                setPeriod(index)
               }}>
-              <SyledText selected={period === item.ID ? true : false}>
-                {item.description}
+              <SyledText selected={period === index ? true : false}>
+                {item}
               </SyledText>
             </Row>
           ))}

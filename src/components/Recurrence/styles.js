@@ -46,7 +46,6 @@ export const SyledText = styled.Text`
 `
 export const SyledInput = styled.TextInput`
   padding: 5px 0;
-  margin: 0;
   font-size: 40px;
   background-color: #ddd;
   border-radius: 6px;

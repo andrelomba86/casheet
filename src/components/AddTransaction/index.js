@@ -1,7 +1,8 @@
 // import { Accounts, }
 // import './db'
 import React, { useState } from 'react'
-import DateTimePicker from '@react-native-community/datetimepicker'
+// import DateTimePicker from '@react-native-community/datetimepicker'
+import DatePicker from './DatePicker'
 import MESSAGE from '../../../locale/pt-br/pt-br.js'
 
 import {
@@ -9,11 +10,11 @@ import {
   StyledPricetagIcon,
   TransactionTypeContainer,
   TransactionTypeButton,
-  TransactionButtonText,
-  TransactionFormRow,
+  Row,
   TransactionInput,
-  TransactionLabel,
-  TransactionButton,
+  Label,
+  TouchableInput,
+  TouchableInputText,
   TransactionSwitch,
 } from './styles'
 
@@ -46,31 +47,32 @@ const AddTransaction = ({ navigation, route }) => {
   var today = new Date()
   today.setHours(0, 0, 0, 0)
   const [date, setDate] = useState(today)
-  const [showDatePicker, setShowDatePicker] = useState(false)
+  // const [showDatePicker, setShowDatePicker] = useState(false)
   const [category, setCategory] = useState({
     ID: -1,
     description: MESSAGE.uncategorized,
     color: '#D33',
   })
-  const [recurrence, setRecurrence] = useState({})
+  const [recurrence, setRecurrence] = useState({
+    periodIndex: 0,
+    strInterval: '',
+  })
 
   const [paid, setPaid] = useState(true)
+
+  const callback_recurrence = route.prams?.recurrence
 
   React.useEffect(() => {
     if (route.params?.category) {
       setCategory(route.params.category)
-    } else if (route.params?.recurrence) {
-      setRecurrence(route.params.recurrence)
-      console.log(
-        recurrencePeriods.filter(
-          v => v.ID === route.params.recurrence.periodID
-        ),
-        recurrencePeriods[route.params.recurrence.periodID]
-      )
     }
-  }, [route.params])
+    if (route.params?.recurrence) {
+      setRecurrence(route.params.recurrence)
+      console.log(recurrencePeriods[route.params.recurrence.periodIndex])
+    }
+  }, [route.params, callback_recurrence])
 
-  console.log('rennderig')
+  console.log('rendering')
   return (
     <>
       <Container>
@@ -80,22 +82,22 @@ const AddTransaction = ({ navigation, route }) => {
               key={index}
               selected={selectedTransactionType === index ? true : false}
               onPress={() => setTransactionType(index)}>
-              <TransactionButtonText>{item}</TransactionButtonText>
+              <TouchableInputText>{item}</TouchableInputText>
             </TransactionTypeButton>
           ))}
         </TransactionTypeContainer>
 
-        <TransactionFormRow>
-          <TransactionLabel>{MESSAGE.description}</TransactionLabel>
+        <Row>
+          <Label>{MESSAGE.description}</Label>
           <TransactionInput
             onChangeText={text => setDescription(text)}
             value={description}
           />
           {/* {autoFocus={true}} */}
-        </TransactionFormRow>
+        </Row>
 
-        <TransactionFormRow>
-          <TransactionLabel>{MESSAGE.amount}</TransactionLabel>
+        <Row>
+          <Label>{MESSAGE.amount}</Label>
           <TransactionInput
             onChangeText={text => setAmount(text)}
             value={amount}
@@ -104,58 +106,42 @@ const AddTransaction = ({ navigation, route }) => {
             placeholder="0,00"
             center
           />
-        </TransactionFormRow>
+        </Row>
 
-        <TransactionFormRow>
-          <TransactionLabel>{MESSAGE.date}</TransactionLabel>
-          <TransactionButton onPress={() => setShowDatePicker(true)}>
-            <TransactionButtonText>
-              {date.toLocaleDateString()}
-            </TransactionButtonText>
-          </TransactionButton>
-        </TransactionFormRow>
+        <Row>
+          <Label>{MESSAGE.date}</Label>
+          <DatePicker onChangeDate={value => setDate(value)} value={date} />
+        </Row>
 
-        <TransactionFormRow>
-          <TransactionLabel>{MESSAGE.category}</TransactionLabel>
-          <TransactionButton onPress={() => navigation.navigate('Categories')}>
-            <TransactionButtonText>
+        <Row>
+          <Label>{MESSAGE.category}</Label>
+          <TouchableInput onPress={() => navigation.navigate('Categories')}>
+            <TouchableInputText>
               <StyledPricetagIcon color={category.color} />
               &nbsp; {category.description}
-            </TransactionButtonText>
-          </TransactionButton>
-        </TransactionFormRow>
+            </TouchableInputText>
+          </TouchableInput>
+        </Row>
 
-        <TransactionFormRow>
-          <TransactionLabel>{MESSAGE.recurrence}</TransactionLabel>
-          <TransactionButton onPress={() => navigation.navigate('Recurrence')}>
-            <TransactionButtonText>
-              {recurrence.strInterval}&nbsp;
-              {recurrencePeriods.filter(v => v.ID === 2).description}
-            </TransactionButtonText>
-          </TransactionButton>
-        </TransactionFormRow>
+        <Row>
+          <Label>{MESSAGE.recurrence}</Label>
+          <TouchableInput
+            onPress={() => navigation.navigate('Recurrence', recurrence)}>
+            <TouchableInputText>
+              {recurrence.periodIndex > 0 && `${recurrence.strInterval} `}
+              {recurrencePeriods[recurrence.periodIndex]}
+            </TouchableInputText>
+          </TouchableInput>
+        </Row>
 
-        <TransactionFormRow>
-          <TransactionLabel>{MESSAGE.paid}</TransactionLabel>
+        <Row>
+          <Label>{MESSAGE.paid}</Label>
           <TransactionSwitch
             value={paid}
             onValueChange={state => setPaid(state)}
           />
-        </TransactionFormRow>
+        </Row>
 
-        {showDatePicker && (
-          <DateTimePicker
-            testID="dateTimePicker"
-            timeZoneOffsetInMinutes={0}
-            value={date}
-            mode="date"
-            display="default"
-            onChange={(_e, selectedDate) => {
-              setShowDatePicker(false)
-              if (selectedDate) setDate(selectedDate)
-            }}
-          />
-        )}
         {/*
           - descrição
           - conta / conta de origem (transf)

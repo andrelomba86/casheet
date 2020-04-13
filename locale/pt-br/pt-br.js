@@ -18,4 +18,5 @@ export default {
   bimester: 'bimestre(s)',
   year: 'ano(s)',
   repeat: 'Repetir por:',
+  dontrepeat: 'Não repetir',
 }
