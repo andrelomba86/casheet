@@ -6,6 +6,7 @@ import TouchableInput from './TouchableInput'
 import Input from './Input'
 import Switch from './Switch'
 import MESSAGE from '../../../locale/pt-br/pt-br.js'
+import AccountsDB from '../../db/accounts'
 
 import {
   Container,
@@ -51,18 +52,55 @@ const AddTransaction = ({ navigation, route }) => {
     strInterval: '',
   })
   const [paid, setPaid] = useState(true)
+  const [accountFrom, setAccountFrom] = useState('')
+  const [accountTo, setAccountTo] = useState('')
 
-  const callback_recurrence = route.prams?.recurrence
+  const [accounts, setAccounts] = useState([])
 
   React.useEffect(() => {
-    if (route.params?.category) {
-      setCategory(route.params.category)
+    const dbAccounts = AccountsDB.getAccounts()
+    if (dbAccounts.length > 0) {
+      setAccounts(dbAccounts)
+      console.log('setted setAccounts')
+      setAccountFrom(dbAccounts[0])
+      console.log('setted accountfrom', dbAccounts[0])
+    } else {
+      setAccountFrom({
+        ID: -1,
+        description: MESSAGE.add,
+        color: '#ccc',
+      })
     }
-    if (route.params?.recurrence) {
-      setRecurrence(route.params.recurrence)
-      console.log(recurrencePeriods[route.params.recurrence.periodIndex])
+  }, [])
+
+  const categoryFromRoute = route.params?.category
+  const recurrenceFromRoute = route.params?.recurrence
+  const accountFrom_FromRoute = route.params?.accountFrom
+  const accountTo_FromRoute = route.params?.accountTo
+  React.useEffect(() => {
+    if (categoryFromRoute) {
+      setCategory(categoryFromRoute)
     }
-  }, [route.params, callback_recurrence])
+  }, [categoryFromRoute])
+
+  React.useEffect(() => {
+    if (recurrenceFromRoute) {
+      setRecurrence(recurrenceFromRoute)
+    }
+  }, [recurrenceFromRoute])
+
+  React.useEffect(() => {
+    console.log('x---------', accountFrom_FromRoute)
+    if (accountFrom_FromRoute) {
+      setAccountFrom(accountFrom_FromRoute)
+    }
+  }, [accountFrom_FromRoute])
+
+  React.useEffect(() => {
+    if (accountTo_FromRoute) {
+      setAccountFrom(accountTo_FromRoute)
+    }
+  }, [accountTo_FromRoute])
 
   const transactionTypes = [MESSAGE.expense, MESSAGE.income, MESSAGE.transfer]
 
@@ -70,6 +108,7 @@ const AddTransaction = ({ navigation, route }) => {
   return (
     <>
       <Container>
+        {/* Transaction type buttons */}
         <TransactionTypeContainer>
           {transactionTypes?.map((item, index) => (
             <TransactionTypeButton
@@ -82,6 +121,7 @@ const AddTransaction = ({ navigation, route }) => {
           ))}
         </TransactionTypeContainer>
 
+        {/* Description */}
         <Input
           label={MESSAGE.description}
           onChangeText={text => setDescription(text)}
@@ -89,6 +129,7 @@ const AddTransaction = ({ navigation, route }) => {
         />
         {/* {autoFocus={true}} */}
 
+        {/* Amount */}
         <Input
           label={MESSAGE.amount}
           onChangeText={text => setAmount(text)}
@@ -99,12 +140,28 @@ const AddTransaction = ({ navigation, route }) => {
           center
         />
 
+        {/* Date */}
         <DatePicker
           label={MESSAGE.date}
           onChangeDate={value => setDate(value)}
           value={date}
         />
 
+        {/* Account FROM */}
+        <TouchableInput
+          label={MESSAGE.account}
+          color={accountFrom?.color}
+          onPress={() =>
+            navigation.navigate('Accounts', {
+              accounts: accounts,
+              type: 'from',
+            })
+          }
+        >
+          {accountFrom?.description}
+        </TouchableInput>
+
+        {/* Categories */}
         <TouchableInput
           label={MESSAGE.category}
           onPress={() => navigation.navigate('Categories')}
@@ -113,6 +170,7 @@ const AddTransaction = ({ navigation, route }) => {
           &nbsp; {category.description}
         </TouchableInput>
 
+        {/* Recurrence */}
         <TouchableInput
           label={MESSAGE.recurrence}
           onPress={() => navigation.navigate('Recurrence', recurrence)}
@@ -121,6 +179,7 @@ const AddTransaction = ({ navigation, route }) => {
           {recurrencePeriods[recurrence.periodIndex]}
         </TouchableInput>
 
+        {/* Paid Switch */}
         <Switch
           label={MESSAGE.paid}
           value={paid}
@@ -139,6 +198,8 @@ const AddTransaction = ({ navigation, route }) => {
 
          */}
       </Container>
+
+      {/* OK and back buttons */}
       <ButtonsContainer>
         {buttons.map((item, index) => (
           <Button

@@ -7,6 +7,14 @@ export const Container = styled.ScrollView`
   null}
 `
 
+export const StyledPlusIcon = styled(Icon).attrs({
+  name: 'md-add',
+})`
+  font-size: 17px;
+  margin: 20px;
+  color: ${props => (props.color ? props.color : 'black')};
+`
+
 export const StyledPricetagIcon = styled(Icon).attrs({
   name: 'md-pricetag',
 })`
@@ -32,10 +40,6 @@ export const TransactionTypeButton = styled.TouchableOpacity.attrs({
   border-bottom-width: 3px;
   border-bottom-color: ${props => (props.selected ? '#D33' : '#F3F3F3')};
 `
-//background: ${prop => prop.selected ? "#DA3" : "#AAA"};
-//  border-radius: 4px;
-//  border-color: ${prop => prop.selected ? "#DA3" : "#AAA"};
-//  border: 0 0 2px 0;
 
 export const Row = styled.View`
   flex-direction: row;
@@ -77,6 +81,7 @@ export const Touchable = styled.TouchableOpacity.attrs({
 `
 export const TouchableText = styled.Text`
   font-size: 17px;
+  ${props => props.color && `color: ${props.color}`}
 ` //color: white;
 
 export const StyledSwitch = styled.Switch.attrs({

@@ -25,7 +25,7 @@ import { Button, StyledIcon, ButtonsContainer } from '../BasicButtonsStyles'
 
 const Recurrence = ({ navigation, route }) => {
   const [interval, setInterval] = useState(route.params?.strInterval || '1')
-  const [period, setPeriod] = useState(route.params.periodIndex || 0)
+  const [period, setPeriod] = useState(route.params?.periodIndex || 0)
 
   const buttons = [
     {
@@ -68,7 +68,8 @@ const Recurrence = ({ navigation, route }) => {
               selected={period === index ? true : false}
               onPress={() => {
                 setPeriod(index)
-              }}>
+              }}
+            >
               <SyledText selected={period === index ? true : false}>
                 {item}
               </SyledText>
@@ -82,7 +83,8 @@ const Recurrence = ({ navigation, route }) => {
             key={index}
             index={index}
             bgcolor={item.color}
-            onPress={item.onpress}>
+            onPress={item.onpress}
+          >
             <StyledIcon name={item.icon} />
           </Button>
         ))}
